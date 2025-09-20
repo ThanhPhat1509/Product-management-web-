@@ -44,12 +44,16 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
     const deleteButtons = document.querySelectorAll('[button-delete]');
     if (deleteButtons.length > 0) {
+        const formDeleteItem = document.querySelector('#delete-item-form');
+        const path = formDeleteItem.getAttribute('data-path');
         deleteButtons.forEach((button) => {
             button.addEventListener('click', () => {
                 const isConfirmed = confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?");
                 if (isConfirmed) {
-
                     const id = button.getAttribute("data-id");
+                    const action = `${path}/${id}?_method=DELETE`;
+                    formDeleteItem.action = action;
+                    formDeleteItem.submit();
                 }
             })
         })

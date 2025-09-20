@@ -57,17 +57,11 @@ module.exports.changeMultiple = async (req, res) => {
     try {
         console.log("=== changeMultiple called ===");
         console.log("Request body:", req.body);
-
         const type = req.body.type;
         let ids = req.body.ids ? req.body.ids.split(",") : [];
-
-        console.log("Raw ids:", req.body.ids);
-        console.log("Parsed ids:", ids);
-
         ids = ids.filter(id => id && id.trim() !== "");
-        console.log("Filtered ids:", ids);
-
         let updateData = null;
+
         switch (type) {
             case "active":
                 updateData = { status: "active" };
@@ -76,9 +70,6 @@ module.exports.changeMultiple = async (req, res) => {
                 updateData = { status: "not active" };
                 break;
         }
-
-        console.log("Update type:", type);
-        console.log("Update data:", updateData);
 
         if (updateData && ids.length > 0) {
             const result = await Product.updateMany(
@@ -97,3 +88,14 @@ module.exports.changeMultiple = async (req, res) => {
         return res.status(500).json({ error: "Server error" });
     }
 };
+
+// delete admin/products/:id
+module.exports.deleteItem = async (req, res) => {
+    const { id } = req.params;
+    console.log('Deleting product with id:', id);
+    await Product.updateOne({ _id: id }, { 
+        deleted: true ,
+        deletedAt: new Date()
+    });
+    res.redirect("/admin/products");
+}
