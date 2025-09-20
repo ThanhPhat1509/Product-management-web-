@@ -1,0 +1,30 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .container
+    .row
+      .col-12
+        +box-head("Danh sach san pham")
+    .row
+      each item in products
+        if item.isActive
+          .col-12.col-md-6.col-lg-4.mb-3
+            .product-item
+              .inner-image
+                img(src=item.thumbnail, alt=item.description)
+              .inner-content
+                h3.inner-title #{item.title}
+                .inner-old-price #{item.price}
+                .inner-new-price #{item.newPrice}
+                .inner-discount  #{item.discountPercentage}
+        else
+          .col-4.mb-3
+            .product-item
+              .inner-image
+                img(src=item.thumbnail, alt=item.description)
+              .inner-content
+                h3.inner-title #{item.title}
+                .inner-old-price #{item.price}
+                .inner-new-price #{item.newPrice}
+                .inner-discount  #{item.discountPercentage}

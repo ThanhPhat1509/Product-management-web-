@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    title #{pageTitle || 'Default Title'}
+    link(rel="stylesheet", href="/css/style.css")
+    link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css", integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z", crossorigin="anonymous")
+  body
+    include ../partials/header.pug
+    block main
+    include ../partials/footer.pug
+    script(src="https://code.jquery.com/jquery-3.5.1.slim.min.js", integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj", crossorigin="anonymous")
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js", integrity="sha384-LtrjvnR4/J54J6hDHhU3nyFuR3p1KjQk6AAJ6G+Y5nI5e5z5F5r5v5v5v5v5v5v5", crossorigin="anonymous")
+    script(src="/js/script.js")

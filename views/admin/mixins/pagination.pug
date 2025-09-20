@@ -1,0 +1,24 @@
+mixin pagination(pagination)
+  nav 
+      ul(class="pagination")
+        li(class="page-item")
+          button(
+            class="page-link" 
+            button-pagination = pagination.currentPage > 0 ? pagination.currentPage - 1 : 0
+            disabled=pagination.currentPage <= 1
+            ) Previous
+        - for(var i = 1; i <= pagination.totalPage; i++)
+          - var activeClass = (i == pagination.currentPage) ? 'active' : '';
+          li(class=`page-item ${activeClass}`)
+            button(
+              class="page-link" 
+              button-pagination = i
+              ) #{i}
+        li(class="page-item")
+          button(
+            class="page-link" 
+            button-pagination = pagination.currentPage < pagination.totalPage ? pagination.currentPage + 1 : pagination.totalPage
+            disabled=pagination.currentPage >= pagination.totalPage
+            ) Next
+
+        
