@@ -35,3 +35,47 @@
 }
 
 /*End Body*/
+
+/*Sider*/
+.sider .sider-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sider .sider-menu ul li a {
+    color: #fff;
+    display: block;
+    padding: 6px 10px;
+    border-bottom: 1px solid #444;
+}
+
+/*End Sider*/
+
+/* Show Alert */
+[show-aleert] {
+    position: fixed;
+    top: 70px;
+    right: 15px;
+    z-index: 1000;
+    min-width: 300px;
+}
+
+[show-aleert].alert-hidden {
+    animation-name: alert-hidden;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+}
+
+@keyframes alert-hidden {
+    from {
+        right: 15px;
+    }
+
+    to {
+        right: -100%;
+        display: none;
+    }
+}
+
+/* End Show Alert */

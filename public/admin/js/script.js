@@ -106,7 +106,7 @@ if (formChangeMultiple) {
                         .closest("tr")
                         .querySelector("input[name='position']")
                         .value;
-                        ids.push(`${id}-${position}`);
+                    ids.push(`${id}-${position}`);
                 }
                 else {
                     ids.push(input.value);
@@ -121,3 +121,13 @@ if (formChangeMultiple) {
 }
 
 // End Form Change Multiple
+
+// Show Alert
+const showElert = document.querySelectorAll("[show-alert]");
+if (showElert) {
+    const time = parseInt(showElert.getAttribute("data-time"));
+    setTimeout(() => {
+        showElert.classList.add("alert-hidden");
+    }, time);
+}
+// End Show Alert

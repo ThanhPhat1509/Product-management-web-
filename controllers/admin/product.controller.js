@@ -52,9 +52,13 @@ module.exports.index = async (req, res) => {
 module.exports.changeStatus = async (req, res) => {
     const { id, status } = req.params;
     const newStatus = status === "active" ? "not active" : "active";
+
     await Product.updateOne({ _id: id }, { status: newStatus });
-    res.json({ status: newStatus });
+
+    req.flash("success", "Cập nhật trạng thái thành công");
+    res.redirect("/admin/products");
 };
+
 
 module.exports.changeMultiple = async (req, res) => {
     try {

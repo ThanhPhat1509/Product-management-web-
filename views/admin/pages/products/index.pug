@@ -4,6 +4,13 @@ include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 
 block main
+  if success
+  .alert.alert-success.alert-dismissible.fade.show.message.info(
+    show-alert 
+    data-time="5000"
+  ) #{success}
+
+
   h1 DANH SACH SAN PHAM
 
   .card.mb-3
