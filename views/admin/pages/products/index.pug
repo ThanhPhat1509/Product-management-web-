@@ -28,8 +28,11 @@ block main
         .d-flex.align-item-start
           .form-group
             select.form-control(name="type")
+              option(disabled  selected) Chọn trạng thái
               option(value="active") Còn hàng
               option(value="not active") Hết hàng
+              option(value = "delete-all") Xóa tất cả
+              option(value = "change-position") Cập nhật vị trí
           .form-group.d-flex.ml-2
             input.form-control(
               type="text"
@@ -49,6 +52,7 @@ block main
             th Hình ảnh 
             th Tiêu đề 
             th Giá 
+            th Vị trí
             th Trạng Thái 
             th Hành Động 
         tbody
@@ -66,6 +70,14 @@ block main
                 )
               td #{item.title}
               td #{item.price}$
+              td 
+                input(
+                  type="number"             
+                  value=item.position
+                  min ="1"
+                  name="position"
+                  style="width: 80px;"
+                )
               td
                 if item.status == "active"
                   a.badge.badge-success(

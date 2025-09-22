@@ -58,6 +58,5 @@ document.addEventListener("DOMContentLoaded", function () {
             })
         })
     }
-
 })
 // End delete product

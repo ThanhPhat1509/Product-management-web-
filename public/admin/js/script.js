@@ -87,12 +87,30 @@ if (formChangeMultiple) {
         let checkboxMultiple = document.querySelector("[checkbox-multiple]");
         let inputChecked = checkboxMultiple.querySelectorAll("input[name='check-item']:checked");
 
-        console.log("Checked items:", inputChecked.length);
+        const typeChange = e.target.elements.type.value;
+        if (typeChange === "delete-all") {
+            const isConfirmed = confirm("Bạn có chắc chắn muốn xóa các mục đã chọn không?");
+            if (!isConfirmed) {
+                return;
+            }
+        }
+
+
         if (inputChecked.length > 0) {
             let ids = [];
             let inputIds = formChangeMultiple.querySelector("input[name='ids']");
             inputChecked.forEach(input => {
-                ids.push(input.value);
+                const id = input.value;
+                if (typeChange === "change-position") {
+                    const position = input
+                        .closest("tr")
+                        .querySelector("input[name='position']")
+                        .value;
+                        ids.push(`${id}-${position}`);
+                }
+                else {
+                    ids.push(input.value);
+                }
             });
             inputIds.value = ids.join(",");
             formChangeMultiple.submit();

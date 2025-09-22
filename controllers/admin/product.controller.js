@@ -5,7 +5,7 @@ const paginationHelper = require("../../helpers/pagination");
 const systemConfig = require('../../config/system'); // adjust path as needed
 // get admin/products
 module.exports.index = async (req, res) => {
-    console.log('Vào controller admin product');
+
     const filterStatus = filterStatusHelper(req.query);
     let find = {
         deleted: false
@@ -28,13 +28,16 @@ module.exports.index = async (req, res) => {
         countProducts
     );
 
-    const products = await Product.find(find).limit(objectPagination.limitItem).skip(objectPagination.skip);
+    const products = await Product.find(find)
+        .sort({ position: "asc" })
+        .limit(objectPagination.limitItem)
+        .skip(objectPagination.skip);
     const newProducts = products.map(item => {
         const obj = item.toObject();
         obj.newPrice = (obj.price - (obj.price * obj.discountPercentage / 100)).toFixed(2);
         return obj;
     });
-    console.log('objectPagination:', objectPagination);
+
     res.render("admin/pages/products/index", {
         pageTitle: "Trang san pham 100",
         products: newProducts,
@@ -69,6 +72,18 @@ module.exports.changeMultiple = async (req, res) => {
             case "not active":
                 updateData = { status: "not active" };
                 break;
+            case "delete-all":
+                updateData = { deleted: true, deletedAt: new Date() };
+                break;
+            case "change-position":
+                console.log("Changing positions for ids:", ids);
+                for (const item of ids) {
+                    let [id, position] = item.split("-");
+                    position = parseInt(position);
+                    await Product.updateOne({ _id: id }, { position: position });
+
+                }
+                return res.redirect("/admin/products");
         }
 
         if (updateData && ids.length > 0) {
@@ -93,8 +108,8 @@ module.exports.changeMultiple = async (req, res) => {
 module.exports.deleteItem = async (req, res) => {
     const { id } = req.params;
     console.log('Deleting product with id:', id);
-    await Product.updateOne({ _id: id }, { 
-        deleted: true ,
+    await Product.updateOne({ _id: id }, {
+        deleted: true,
         deletedAt: new Date()
     });
     res.redirect("/admin/products");
