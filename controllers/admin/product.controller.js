@@ -146,6 +146,7 @@ module.exports.createPostProduct = async (req, res) => {
     else{
         req.body.position = parseInt(req.body.position);
     }
+    req.body.thumbnail = `uploads/${req.file.filename}`;
     const product = new Product(req.body);
     product.save();
     res.redirect("/admin/products");
