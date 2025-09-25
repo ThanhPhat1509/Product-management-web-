@@ -1,3 +1,7 @@
+.margin-left {
+    margin-left: 15px;
+}
+
 /* Header */
 .header {
     background: gray;
@@ -53,15 +57,17 @@
 /*End Sider*/
 
 /* Show Alert */
-[show-aleert] {
+[show-alert] {
     position: fixed;
+    padding-right: 35px;
     top: 70px;
     right: 15px;
     z-index: 1000;
+    width: fit-content;
     min-width: 300px;
 }
 
-[show-aleert].alert-hidden {
+[show-alert].alert-hidden {
     animation-name: alert-hidden;
     animation-duration: 0.5s;
     animation-fill-mode: both;
@@ -77,5 +83,24 @@
         display: none;
     }
 }
+
+[close-alert] {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+
+[close-alert]:hover {
+    opacity: 1;
+    color: #ff0000;
+    /* hover chuyển sang đỏ cho nổi bật */
+}
+
 
 /* End Show Alert */

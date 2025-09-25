@@ -50,13 +50,18 @@ module.exports.index = async (req, res) => {
 };
 // patch admin/products/:id
 module.exports.changeStatus = async (req, res) => {
-    const { id, status } = req.params;
-    const newStatus = status === "active" ? "not active" : "active";
-
-    await Product.updateOne({ _id: id }, { status: newStatus });
-
-    req.flash("success", "Cập nhật trạng thái thành công");
-    res.redirect("/admin/products");
+    try {
+        const { id, status } = req.params;
+        const newStatus = status === "active" ? "not active" : "active";
+        await Product.updateOne({ _id: id }, { status: newStatus });
+        // flash phải đặt trước redirect
+        req.flash("success", "Cập nhật trạng thái thành công");
+        return res.redirect("/admin/products");
+    } catch (err) {
+        console.error("Error in changeStatus:", err);
+        req.flash("error", "Có lỗi xảy ra khi cập nhật trạng thái");
+        return res.redirect("/admin/products");
+    }
 };
 
 
@@ -96,11 +101,15 @@ module.exports.changeMultiple = async (req, res) => {
                 updateData
             );
             console.log("Update result:", result);
+            req.flash("success", "Cập nhật trạng thái thành công");
+            return res.redirect("/admin/products");
         } else {
-            console.warn("No valid ids or updateData, skipping update.");
+            req.flash("error", "Không có mục nào được chọn hoặc loại hành động không hợp lệ");
+            return res.redirect("/admin/products");
         }
 
-        return res.redirect("/admin/products");
+
+
 
     } catch (err) {
         console.error("Error in changeMultiple:", err);
@@ -116,5 +125,28 @@ module.exports.deleteItem = async (req, res) => {
         deleted: true,
         deletedAt: new Date()
     });
+    req.flash("success", "Cập nhật trạng thái thành công");
+    res.redirect("/admin/products");
+}
+// get admin/products/create
+module.exports.createProduct = async (req, res) => {
+        res.render("admin/pages/products/create", {
+            pageTitle: "thêm mới sản phẩm"
+    });
+}
+
+module.exports.createPostProduct = async (req, res) => {
+    req.body.price = parseInt(req.body.price);
+    req.body.discountPercentage = parseInt(req.body.discountPercentage);
+    req.body.stock = parseInt(req.body.stock);
+    if(req.body.position == ""){
+        const countProducts = await Product.countDocuments();
+        req.body.position = countProducts + 1;
+    }
+    else{
+        req.body.position = parseInt(req.body.position);
+    }
+    const product = new Product(req.body);
+    product.save();
     res.redirect("/admin/products");
 }

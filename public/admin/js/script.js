@@ -123,11 +123,15 @@ if (formChangeMultiple) {
 // End Form Change Multiple
 
 // Show Alert
-const showElert = document.querySelectorAll("[show-alert]");
+const showElert = document.querySelector("[show-alert]");
 if (showElert) {
+    const closeAlert = showElert.querySelector("[close-alert]");
     const time = parseInt(showElert.getAttribute("data-time"));
     setTimeout(() => {
         showElert.classList.add("alert-hidden");
     }, time);
+    closeAlert.addEventListener("click", () => {
+        showElert.classList.add("alert-hidden");
+    });
 }
 // End Show Alert

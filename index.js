@@ -35,8 +35,9 @@ app.use(session({
 // Flash (cần session)
 app.use(flash());
 app.use((req, res, next) => {
-  res.locals.success = req.flash("success").join(", ");
-  res.locals.error = req.flash("error").join(", ");
+  // join thành chuỗi để dễ in trong view
+  res.locals.success = req.flash("success").join(' ');
+  res.locals.error = req.flash("error").join(' ');
   next();
 });
 app.use(bodyParser.urlencoded({ extended: false }));

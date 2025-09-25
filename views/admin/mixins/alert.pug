@@ -1,0 +1,10 @@
+mixin alert(type, message, time=3000)
+  if message
+    .alert.alert-dismissible.fade.show.message.info(
+      class=`alert-${type}`
+      show-alert
+      data-time=time
+      role="alert"
+    )
+      span #{message}
+      span(close-alert style="margin-left:10px; cursor:pointer; font-weight:bold") ×

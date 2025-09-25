@@ -2,13 +2,12 @@ extends ../../layouts/default.pug
 include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
+include ../../mixins/alert.pug
 
 block main
-  if success
-  .alert.alert-success.alert-dismissible.fade.show.message.info(
-    show-alert 
-    data-time="5000"
-  ) #{success}
+
+  +alert("success", success, 3000)
+  +alert("danger", error, 3000)
 
 
   h1 DANH SACH SAN PHAM
@@ -48,8 +47,10 @@ block main
               class="d-none"
             )
             button.btn.btn-primary.btn-sm.ml-2.text-nowrap(type="submit") Áp dụng
-
-
+            a(
+              href=`${prefixAdmin}/products/create`
+              class ="btn btn-outline-success margin-left"
+              ) + Thêm mới 
       table.table.table-hover.table-sm(checkbox-multiple)
         thead 
           tr
