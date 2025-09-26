@@ -104,3 +104,51 @@
 
 
 /* End Show Alert */
+/* Image - preview*/
+[upload-image] {
+    display: flex;
+    flex-direction: column;
+    /* xếp theo cột */
+    align-items: center;
+    /* căn giữa ngang */
+}
+
+.preview-wrapper {
+    position: relative;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    height: auto;
+
+}
+
+.upload-image-preview {
+    display: none;
+    max-width: 300px;
+    max-height: 300px;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.remove-pr-img-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* End image - preview*/

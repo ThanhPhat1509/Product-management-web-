@@ -135,3 +135,30 @@ if (showElert) {
     });
 }
 // End Show Alert
+// Upload Image
+const uploadImage = document.querySelector("[upload-image]");
+
+if (uploadImage) {
+    const uploadImageInput = uploadImage.querySelector("[upload-image-input]");
+    const uploadImagePreview = uploadImage.querySelector("[upload-image-preview]");
+    const removeBtn = uploadImage.querySelector(".remove-pr-img-btn");
+
+    uploadImageInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            uploadImagePreview.style.display = "block"; // hiện ra
+
+            uploadImagePreview.src = URL.createObjectURL(file);
+            removeBtn.classList.remove("hidden"); // 👈 chỉ hiện khi có ảnh
+        }
+    });
+
+    removeBtn.addEventListener("click", () => {
+        uploadImagePreview.src = "";
+        uploadImageInput.value = "";  // reset input file
+        removeBtn.classList.add("hidden"); // ẩn lại nút
+    });
+}
+
+
+// End Upload Image
