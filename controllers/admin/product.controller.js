@@ -130,24 +130,32 @@ module.exports.deleteItem = async (req, res) => {
 }
 // get admin/products/create
 module.exports.createProduct = async (req, res) => {
-        res.render("admin/pages/products/create", {
-            pageTitle: "thêm mới sản phẩm"
+    res.render("admin/pages/products/create", {
+        pageTitle: "thêm mới sản phẩm"
     });
 }
 
 module.exports.createPostProduct = async (req, res) => {
+    if (!q.req.body.title || !req.body.price || !req.body.discountPercentage || !req.body.stock) {
+        req.flash("error", "Dữ liệu không hợp lệ");
+        res.redirect("/admin/products");
+        return;
+    }
     req.body.price = parseInt(req.body.price);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
-    if(req.body.position == ""){
+    if (req.body.position == "") {
         const countProducts = await Product.countDocuments();
         req.body.position = countProducts + 1;
     }
-    else{
+    else {
         req.body.position = parseInt(req.body.position);
     }
-    req.body.thumbnail = `uploads/${req.file.filename}`;
+    if (req.file) {
+        req.body.thumbnail = `uploads/${req.file.filename}`;
+    }
     const product = new Product(req.body);
     product.save();
     res.redirect("/admin/products");
 }
+
