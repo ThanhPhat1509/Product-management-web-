@@ -212,3 +212,23 @@ module.exports.editPatch = async (req, res) => {
     return res.redirect(`/admin/products/edit/${req.params.id}`);
 
 }
+
+module.exports.detail= async (req, res) => {
+    try {
+        const find = {
+            _id: req.params.id,
+            deleted: false
+        };
+        const product = await Product.findOne(find);
+        console.log(product.thumbnail);
+        res.render("admin/pages/products/detail", {
+            pageTitle: product.title,
+            product: product
+        });
+    }
+    catch (err) {
+        console.error("Error in edit:", err);
+        req.flash("error", "Có lỗi xảy ra khi tải trang chỉnh sửa");
+        return res.redirect("back");
+    }
+}

@@ -1,0 +1,34 @@
+extends ../../layouts/default.pug
+
+block main 
+    if(product.title)   
+        h1(class ="mb-4") Chi tiết sản phẩm: #{product.title}
+    if(product.price)   
+        h5(class ="mb-4") Giá: $#{product.price}
+    if(product.discountPercentage)   
+        h5(class ="mb-4") Giảm giá: #{product.discountPercentage}%
+    if(product.stock)   
+        h5(class ="mb-4") Số lượng: #{product.stock}
+    if(product.description)   
+        h5(class ="mb-4") Mô tả:    
+            p #{product.description}
+    if(product.thumbnail)
+        h5(class ="mb-4") Hình ảnh:
+        img(src=product.thumbnail alt=product.title width="300")
+    if(product.status)   
+        h5(class ="mb-4") Trạng thái: 
+        if product.status == "active"
+            span.badge.badge-success Còn hàng
+        else
+            span.badge.badge-danger Hết hàng\
+    if(product.position)
+        h5(class ="mb-4") Vị trí: #{product.position}
+    if(product.description)   
+        h5(class ="mb-4") Mô tả:    
+            p #{product.description}
+    a.btn.btn-warning.btn-sm(
+        href=`${prefixAdmin}/products/edit/${product._id}`
+    ) Sửa
+block scripts
+  script(src="/admin/js/script.js")
+  script(src="/admin/js/product.js")
