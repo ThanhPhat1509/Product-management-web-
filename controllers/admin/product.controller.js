@@ -175,7 +175,40 @@ module.exports.edit = async (req, res) => {
     catch (err) {
         console.error("Error in edit:", err);
         req.flash("error", "Có lỗi xảy ra khi tải trang chỉnh sửa");
-        return res.redirect("/admin/products");
+        return res.redirect("back");
+    }
+}
+
+module.exports.editPatch = async (req, res) => {
+    if (!req.body.title || !req.body.price || !req.body.discountPercentage || !req.body.stock) {
+        req.flash("error", "Dữ liệu không hợp lệ");
+        res.redirect("/admin/products");
+        return;
+    }
+    req.body.price = parseInt(req.body.price);
+    req.body.discountPercentage = parseInt(req.body.discountPercentage);
+    req.body.stock = parseInt(req.body.stock);
+    if (req.body.position == "") {
+        const countProducts = await Product.countDocuments();
+        req.body.position = countProducts + 1;
+    }
+    else {
+        req.body.position = parseInt(req.body.position);
+    }
+    if (req.file) {
+        req.body.thumbnail = `uploads/${req.file.filename}`;
+    }
+
+    try {
+        await Product.updateOne({ _id: req.params.id }, req.body);
+        req.flash("success", "Cập nhật sản phẩm thành công");
+    } catch (err) {
+        console.error("Error in editPatch:", err);
+        req.flash("error", "Có lỗi xảy ra khi cập nhật sản phẩm");
+        return res.redirect(`/admin/products/edit/${req.params.id}`);
 
     }
+
+    return res.redirect(`/admin/products/edit/${req.params.id}`);
+
 }

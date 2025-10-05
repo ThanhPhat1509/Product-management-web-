@@ -1,5 +1,9 @@
 extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
 block main 
+    +alert("success", success, 3000)
+    +alert("danger", error, 3000)
     h1(class ="mb-4") Chỉnh sửa sản phẩm 
     form(
         action=`${prefixAdmin}/products/edit/${product._id}?_method=PATCH`
@@ -35,6 +39,7 @@ block main
                 name="price"
                 value= product.price
                 min="0"
+                step="0.01" 
                 required 
             )      
         div(class = "form-group")
@@ -46,6 +51,7 @@ block main
                 name="discountPercentage"
                 value= product.discountPercentage
                 min="0"
+                step="0.01" 
             )       
         div(class = "form-group")
             label(for="stock") Số lượng 
