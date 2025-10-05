@@ -159,3 +159,23 @@ module.exports.createPostProduct = async (req, res) => {
     res.redirect("/admin/products");
 }
 
+module.exports.edit = async (req, res) => {
+    try {
+        const find = {
+            _id: req.params.id,
+            deleted: false
+        };
+        const product = await Product.findOne(find);
+        console.log(product.thumbnail);
+        res.render("admin/pages/products/edit", {
+            pageTitle: "Chỉnh sửa sản phẩm",
+            product: product
+        });
+    }
+    catch (err) {
+        console.error("Error in edit:", err);
+        req.flash("error", "Có lỗi xảy ra khi tải trang chỉnh sửa");
+        return res.redirect("/admin/products");
+
+    }
+}

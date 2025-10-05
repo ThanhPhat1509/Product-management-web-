@@ -132,6 +132,15 @@
     border-radius: 8px;
 }
 
+.upload-image-edit {
+    max-width: 300px;
+    max-height: 300px;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+
 .remove-pr-img-btn {
     position: absolute;
     top: 5px;

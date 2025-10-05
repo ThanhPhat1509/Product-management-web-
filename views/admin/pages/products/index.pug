@@ -16,7 +16,6 @@ block main
     .card-header Bộ lọc danh sách sản phẩm
     .card-body
 
-
   .row
     .col-6
       +filter-status(filterStatus)
@@ -102,9 +101,9 @@ block main
                     button-change-status
                   ) Hết hàng
               td 
-                a.btn.btn-warning.btn-sm (
-                  href = {`${prefixAdmin}/products/edit/${item._id}`}
-                )Sửa
+                a.btn.btn-warning.btn-sm(
+                  href=`${prefixAdmin}/products/edit/${item._id}`
+                ) Sửa
                 button.btn.btn-danger.btn-sm.ml-1(
                   data-id = item._id
                   button-delete

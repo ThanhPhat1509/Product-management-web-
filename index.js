@@ -19,33 +19,27 @@ app.set('views', './views');
 app.set('view engine', 'pug');
 app.use(express.static('public'));
 
-// Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride('_method'));
 
-// Cookie & Session (đúng cú pháp cho Express 4/5)
 app.use(cookieParser('keyboard cat'));
 app.use(session({
-  secret: 'keyboard cat',        // nên để trong .env
+  secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
   cookie: { maxAge: 60000 }
 }));
 
-// Flash (cần session)
 app.use(flash());
 app.use((req, res, next) => {
-  // join thành chuỗi để dễ in trong view
   res.locals.success = req.flash("success").join(' ');
   res.locals.error = req.flash("error").join(' ');
   next();
 });
 app.use(bodyParser.urlencoded({ extended: false }));
-// App Locals Variables
 app.locals.prefixAdmin = system.prefixAdmin;
 
-// Routes
 adminRoute(app);
 route(app);
 
