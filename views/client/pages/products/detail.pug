@@ -1,0 +1,21 @@
+extends ../../layouts/default.pug
+
+block main
+  .container 
+    .row
+      .col-12
+        .product-detail
+          .detail-image
+            img(src=product.thumbnail, alt=product.description)
+          .detail-content
+            h1.detail-title #{product.title}
+            .detail-description #{product.description}
+            .detail-old-price Giá cũ: #{product.price}
+            .detail-new-price Giá mới: #{product.newPrice}
+            .detail-discount Giảm giá: #{product.discountPercentage}
+            if product.isActive
+              span.badge.bg-success Trạng thái: Còn hàng
+            else
+              span.badge.bg-danger Trạng thái: Hết hàng
+            br
+            a.btn.btn-primary(href="/products") Quay lại danh sách sản phẩm

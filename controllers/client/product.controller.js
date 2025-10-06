@@ -2,19 +2,37 @@ const Product = require("../../models/product.model");
 
 module.exports.index = async (req, res) => {
 
-        // Fetch products from the database
-        const products = await Product.find();
+    // Fetch products from the database
+    const products = await Product.find();
 
-        // Calculate newPrice for each product
-        const newProducts = products.map(item => {
-            const obj = item.toObject(); // Convert Mongoose document to plain object
-            obj.newPrice = (obj.price - (obj.price * obj.discountPercentage / 100)).toFixed(2);
-            return obj;
+    // Calculate newPrice for each product
+    const newProducts = products.map(item => {
+        const obj = item.toObject(); // Convert Mongoose document to plain object
+        obj.newPrice = (obj.price - (obj.price * obj.discountPercentage / 100)).toFixed(2);
+        return obj;
+    });
+
+    res.render("client/pages/products/index", {
+        pageTitle: "Trang san pham 1",
+        products: newProducts
+    });
+
+};
+
+module.exports.detail = async (req, res) => {
+    try {
+        const find = {
+            deleted: false,
+            slug: req.params.slug,
+            status: "active"
+        };
+        const product = await Product.findOne(find);
+        res.render("client/pages/products/detail", {
+            pageTitle: product.title,
+            product: product
         });
-
-        res.render("client/pages/products/index", {
-            pageTitle: "Trang san pham 1",
-            products: newProducts
-        });
-
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
 };
